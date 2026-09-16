@@ -1,0 +1,13 @@
+name = "videolab-director"
+main = "worker/director.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Set the real key via: wrangler secret put ANTHROPIC_API_KEY
+# Never put the actual key here.
+
+[[routes]]
+# Optional: bind to a custom domain
+# pattern = "videolab-api.yourdomain.com/*"
+# zone_name = "yourdomain.com"
