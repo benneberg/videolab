@@ -6,6 +6,7 @@
  * 3. Registers and mounts all modules
  * 4. Wires image-change events to every module
  * 5. Initialises the tab switcher and notepad
+ * 6. Handles mobile-specific UI interactions (slide-up drawer)
  */
 
 import './style/base.css';
@@ -44,7 +45,18 @@ function buildShell() {
           <span class="version">v0.1</span>
         </div>
         <div class="topbar-spacer"></div>
-        <div class="topbar-status">
+        
+        <!-- Mobile Image Source Toggle Button (Hidden on Desktop) -->
+        <button id="mobile-image-toggle" class="btn-icon btn-ghost mobile-only" aria-label="Toggle image source">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+        </button>
+
+        <!-- Desktop Status (Hidden on Mobile) -->
+        <div class="topbar-status desktop-only">
           <div class="status-dot ready" id="global-dot"></div>
           <span id="global-status">Ready</span>
         </div>
@@ -65,6 +77,9 @@ function buildShell() {
       </main>
 
     </div>
+    
+    <!-- Backdrop for mobile drawer -->
+    <div id="mobile-backdrop" class="mobile-backdrop"></div>
   `;
 }
 
@@ -119,10 +134,40 @@ imageSource.on('mood', data => {
 tabBar.on('activate', ({ id }) => {
   const mod = modules.find(m => m.id === id);
   mod?.onActivate?.();
+  
+  // Proactive: Auto-close the mobile drawer when switching tabs
+  closeMobileDrawer();
 });
 
 // Notepad
 new Notepad();
+
+// ── Mobile Image Source Drawer Logic ─────────────────────────────────
+
+const mobileToggle = document.getElementById('mobile-image-toggle');
+const imageSourceEl = document.getElementById('image-source');
+const backdrop = document.getElementById('mobile-backdrop');
+
+function closeMobileDrawer() {
+  if (imageSourceEl) imageSourceEl.classList.remove('mobile-open');
+  if (backdrop) backdrop.classList.remove('active');
+}
+
+if (mobileToggle) {
+  mobileToggle.addEventListener('click', () => {
+    const isOpen = imageSourceEl?.classList.contains('mobile-open');
+    if (isOpen) {
+      closeMobileDrawer();
+    } else {
+      if (imageSourceEl) imageSourceEl.classList.add('mobile-open');
+      if (backdrop) backdrop.classList.add('active');
+    }
+  });
+}
+
+if (backdrop) {
+  backdrop.addEventListener('click', closeMobileDrawer);
+}
 
 // ── Global error display (development aid) ─────────────────────────────
 window.addEventListener('unhandledrejection', evt => {
