@@ -1,1 +1,106 @@
+/* ─── Google Fonts ────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
+/* ─── Design tokens ───────────────────────────────────────────────── */
+:root {
+  /* Base surfaces */
+  --bg:          #0f1117;
+  --surface:     #171b26;
+  --surface-2:   #1e2333;
+  --surface-3:   #252b3b;
+
+  /* Borders */
+  --border:      #2a2f3e;
+  --border-2:    #353c52;
+
+  /* Text */
+  --text:        #c8cfe0;
+  --text-dim:    #6b7699;
+  --text-bright: #edf0fa;
+
+  /* Accent — cold electric blue */
+  --accent:      #5b7fff;
+  --accent-dim:  rgba(91, 127, 255, 0.15);
+  --accent-glow: rgba(91, 127, 255, 0.35);
+
+  /* Status colors */
+  --amber:       #f0a030;
+  --amber-dim:   rgba(240, 160, 48, 0.15);
+  --green:       #3ecf8e;
+  --green-dim:   rgba(62, 207, 142, 0.15);
+  --red:         #e05252;
+  --red-dim:     rgba(224, 82, 82, 0.15);
+
+  /* Typography */
+  --font-ui:     'Inter', system-ui, sans-serif;
+  --font-mono:   'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Spacing scale */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+
+  /* Layout */
+  --sidebar-w:   220px;
+  --radius:      6px;
+  --radius-sm:   4px;
+}
+
+/* ─── Reset ───────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-ui);
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+img, video, canvas { display: block; max-width: 100%; }
+
+button, select, input, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ─── Scrollbar ───────────────────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-2) transparent;
+}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 3px; }
+
+/* ─── Typography helpers ──────────────────────────────────────────── */
+.mono { font-family: var(--font-mono); }
+.text-dim { color: var(--text-dim); }
+.text-bright { color: var(--text-bright); }
+.text-accent { color: var(--accent); }
+.text-amber { color: var(--amber); }
+.text-green { color: var(--green); }
+.text-red { color: var(--red); }
+
+/* ─── Utility ─────────────────────────────────────────────────────── */
+.hidden { display: none !important; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); border: 0;
+}
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
