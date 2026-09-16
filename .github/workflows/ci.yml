@@ -1,0 +1,40 @@
+name: CI (Continuous Integration)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-and-build:
+    name: Validate & Build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Matches modern Vite requirements
+          cache: 'npm'        # Proactive: Caches npm dependencies for faster runs
+
+      - name: Install dependencies
+        run: npm ci           # 'npm ci' is stricter and faster than 'npm install' for CI
+
+      - name: Lint code (Optional but recommended)
+        # This will pass even if you don't have a lint script yet, preventing workflow failures
+        run: npm run lint || echo "No lint script found in package.json, skipping."
+
+      - name: Build project
+        run: npm run build
+
+      - name: Upload build artifacts
+        # Saves the 'dist' folder so it can be inspected or downloaded from the GitHub Actions UI
+        uses: actions/upload-artifact@v4
+        with:
+          name: videolab-dist
+          path: dist/
+          retention-days: 5
