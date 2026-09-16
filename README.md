@@ -1,5 +1,6 @@
 # VideoLab
-
+   [![CI](https://github.com/benneberg/videolab/actions/workflows/ci.yml/badge.svg)](https://github.com/benneberg/videolab/actions/workflows/ci.yml)
+   [![Deploy](https://github.com/benneberg/videolab/actions/workflows/deploy.yml/badge.svg)](https://github.com/benneberg/videolab/actions/workflows/deploy.yml)
 Modular AI video tool. Currently includes two modules: **Director** (AI-generated shot lists → rendered video) and **Lipsync** (portrait animation from speech). Built to be extended — adding a new tool means adding one module file.
 
 ---
